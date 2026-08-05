@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Attendance Prediction</title>
+    <style>
+        body{
+            font-family:Arial;
+            background:#f4f6f9;
+        }
+
+        .container{
+            width:450px;
+            margin:60px auto;
+            background:white;
+            padding:30px;
+            border-radius:10px;
+            box-shadow:0 0 10px gray;
+        }
+
+        input{
+            width:100%;
+            padding:10px;
+            margin:10px 0;
+        }
+
+        button{
+            width:100%;
+            padding:10px;
+            background:#007BFF;
+            color:white;
+            border:none;
+            cursor:pointer;
+        }
+
+        h2{
+            text-align:center;
+        }
+
+        h3{
+            color:green;
+            text-align:center;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>AI Attendance Prediction</h2>
+
+<form method="POST">
+
+<input type="number"
+name="attendance"
+placeholder="Attendance Percentage"
+required>
+
+<input type="number"
+name="leave"
+placeholder="Leave Days"
+required>
+
+<button type="submit">
+Predict
+</button>
+
+</form>
+
+{% if result %}
+
+<h3>Prediction : {{ result }}</h3>
+
+{% endif %}
+
+</div>
+
+</body>
+</html>

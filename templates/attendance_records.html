@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Attendance Records</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f4f6f9;
+}
+
+.container{
+width:90%;
+margin:30px auto;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+background:white;
+}
+
+th,td{
+border:1px solid #ccc;
+padding:12px;
+text-align:center;
+}
+
+th{
+background:#007BFF;
+color:white;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Attendance Records</h2>
+
+<table>
+
+<tr>
+<th>Employee ID</th>
+<th>Date</th>
+<th>Punch In</th>
+<th>Punch Out</th>
+<th>Status</th>
+</tr>
+
+{% for row in attendance %}
+
+<tr>
+
+<td>{{ row.employee_id }}</td>
+
+<td>{{ row.date }}</td>
+
+<td>{{ row.punch_in }}</td>
+
+<td>{{ row.punch_out }}</td>
+
+<td>{{ row.status }}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+</body>
+</html>

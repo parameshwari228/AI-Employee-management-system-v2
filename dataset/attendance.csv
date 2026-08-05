@@ -1,0 +1,11 @@
+attendance_percentage,leave_days,status
+98,0,Present
+95,1,Present
+90,2,Present
+85,3,Present
+80,4,Present
+75,5,Absent
+70,6,Absent
+65,8,Absent
+60,10,Absent
+55,12,Absent

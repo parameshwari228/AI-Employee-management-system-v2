@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ANN Employee Performance Prediction</title>
+
+    <style>
+        body{
+            font-family: Arial;
+            background:#f4f6f9;
+        }
+
+        .container{
+            width:450px;
+            margin:40px auto;
+            background:white;
+            padding:25px;
+            border-radius:10px;
+            box-shadow:0px 0px 10px gray;
+        }
+
+        h2{
+            text-align:center;
+            color:#2c3e50;
+        }
+
+        input{
+            width:100%;
+            padding:10px;
+            margin-top:10px;
+            margin-bottom:15px;
+        }
+
+        button{
+            width:100%;
+            padding:10px;
+            background:#3498db;
+            color:white;
+            border:none;
+            cursor:pointer;
+            font-size:16px;
+        }
+
+        button:hover{
+            background:#2980b9;
+        }
+
+        h3{
+            color:green;
+            text-align:center;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>ANN Performance Prediction</h2>
+
+<form method="POST">
+
+<label>Attendance</label>
+<input type="number" name="attendance" required>
+
+<label>Leave Days</label>
+<input type="number" name="leave_days" required>
+
+<label>Experience</label>
+<input type="number" name="experience" required>
+
+<label>Projects</label>
+<input type="number" name="projects" required>
+
+<label>Training Score</label>
+<input type="number" name="training_score" required>
+
+<label>Overtime Hours</label>
+<input type="number" name="overtime_hours" required>
+
+<button type="submit">Predict Performance</button>
+
+</form>
+
+{% if result %}
+
+<h3>Prediction : {{ result }}</h3>
+
+{% endif %}
+
+</div>
+
+</body>
+</html>

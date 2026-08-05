@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Salary Slip</title>
+
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#f4f6f9;
+}
+
+/* Sidebar */
+
+.sidebar{
+    position:fixed;
+    width:240px;
+    height:100%;
+    background:#1e293b;
+}
+
+.sidebar h2{
+    color:white;
+    text-align:center;
+    padding:20px;
+    background:#0f172a;
+}
+
+.sidebar ul{
+    list-style:none;
+}
+
+.sidebar ul li a{
+    display:block;
+    color:white;
+    text-decoration:none;
+    padding:15px;
+}
+
+.sidebar ul li a:hover{
+    background:#2563eb;
+}
+
+/* Main */
+
+.main{
+    margin-left:240px;
+    padding:30px;
+}
+
+.card{
+    max-width:750px;
+    margin:auto;
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+.card h2{
+    text-align:center;
+    color:#2563eb;
+    margin-bottom:25px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+table td{
+    border:1px solid #ddd;
+    padding:14px;
+}
+
+table tr:nth-child(even){
+    background:#f8f8f8;
+}
+
+.total{
+    font-weight:bold;
+    background:#dbeafe;
+}
+
+.download{
+    display:block;
+    width:260px;
+    margin:30px auto 15px;
+    text-align:center;
+    text-decoration:none;
+    background:#16a34a;
+    color:white;
+    padding:12px;
+    border-radius:8px;
+}
+
+
+.download:hover{
+    background:#15803d;
+}
+
+.back{
+    display:block;
+    width:220px;
+    margin:auto;
+    text-align:center;
+    text-decoration:none;
+    background:#2563eb;
+    color:white;
+    padding:12px;
+    border-radius:8px;
+}
+
+.back:hover{
+    background:#1d4ed8;
+}
+
+
+</style>
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+<h2>HR Portal</h2>
+
+<ul>
+
+<li><a href="{{ url_for('dashboard') }}"><i class="fas fa-home"></i> Dashboard</a></li>
+
+<li><a href="{{ url_for('profile') }}"><i class="fas fa-user"></i> Profile</a></li>
+
+<li><a href="{{ url_for('attendance') }}"><i class="fas fa-clock"></i> Attendance</a></li>
+
+<li><a href="{{ url_for('leave') }}"><i class="fas fa-calendar-check"></i> Leave</a></li>
+
+<li><a href="{{ url_for('download_salary') }}" class="download">
+    <i class="fas fa-download"></i>
+    Download Salary Slip (PDF)
+</a>
+
+
+<li><a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+
+</ul>
+
+</div>
+
+<div class="main">
+
+<div class="card">
+
+<h2>Employee Salary Slip</h2>
+
+<table>
+
+<tr>
+<td><strong>Employee Name</strong></td>
+<td>{{ salary.employee }}</td>
+</tr>
+
+<tr>
+<td><strong>Month</strong></td>
+<td>{{ salary.month }}</td>
+</tr>
+
+<tr>
+<td><strong>Basic Salary</strong></td>
+<td>₹ {{ salary.basic }}</td>
+</tr>
+
+<tr>
+<td><strong>HRA</strong></td>
+<td>₹ {{ salary.hra }}</td>
+</tr>
+
+<tr>

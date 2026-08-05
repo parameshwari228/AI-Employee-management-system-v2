@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Leave Management</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#f4f6f9;
+}
+
+/* Sidebar */
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    width:240px;
+    height:100%;
+    background:#1e293b;
+}
+
+.sidebar h2{
+    color:white;
+    text-align:center;
+    padding:20px;
+    background:#0f172a;
+}
+
+.sidebar ul{
+    list-style:none;
+}
+
+.sidebar ul li a{
+    display:block;
+    color:white;
+    text-decoration:none;
+    padding:15px;
+}
+
+.sidebar ul li a:hover{
+    background:#2563eb;
+}
+
+/* Main */
+
+.main{
+    margin-left:240px;
+    padding:30px;
+}
+
+.card{
+    max-width:700px;
+    margin:auto;
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+.card h2{
+    text-align:center;
+    color:#2563eb;
+    margin-bottom:25px;
+}
+
+label{
+    display:block;
+    margin-top:15px;
+    font-weight:bold;
+}
+
+input,
+select,
+textarea{
+    width:100%;
+    padding:12px;
+    margin-top:8px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:15px;
+}
+
+textarea{
+    resize:none;
+}
+
+button{
+    width:100%;
+    margin-top:25px;
+    padding:12px;
+    background:#16a34a;
+    color:white;
+    border:none;
+    border-radius:8px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#15803d;
+}
+
+.message{
+    margin-top:20px;
+    text-align:center;
+    color:green;
+    font-weight:bold;
+}
+
+.back{
+    display:block;
+    width:220px;
+    margin:25px auto 0;
+    text-align:center;
+    background:#2563eb;
+    color:white;
+    text-decoration:none;
+    padding:12px;
+    border-radius:8px;
+}
+
+.back:hover{
+    background:#1d4ed8;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+<h2>HR Portal</h2>
+
+<ul>
+<li><a href="{{ url_for('dashboard') }}"><i class="fas fa-home"></i> Dashboard</a></li>
+<li><a href="{{ url_for('profile') }}"><i class="fas fa-user"></i> Profile</a></li>
+<li><a href="{{ url_for('attendance') }}"><i class="fas fa-clock"></i> Attendance</a></li>
+<li><a href="{{ url_for('leave') }}"><i class="fas fa-calendar-check"></i> Leave</a></li>
+<li><a href="{{ url_for('salary') }}"><i class="fas fa-money-bill"></i> Salary</a></li>
+<li><a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+</ul>
+
+</div>
+
+<div class="main">
+
+<div class="card">
+
+<h2>Leave Application</h2>
+<hr>
+
+<h3>My Leave Requests</h3>
+
+<table border="1" width="100%" cellpadding="10">
+    <tr>
+        <th>Leave Type</th>
+        <th>From</th>
+        <th>To</th>
+        <th>Reason</th>
+        <th>Status</th>
+    </tr>
+
+    {% for leave in leaves %}
+    <tr>
+        <td>{{ leave.leave_type }}</td>
+        <td>{{ leave.from_date }}</td>
+        <td>{{ leave.to_date }}</td>
+        <td>{{ leave.reason }}</td>
+        <td>{{ leave.status }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+<form method="POST">
+
+<label>Leave Type</label>
+<select name="leave_type" required>
+    <option value="">Select Leave Type</option>
+    <option value="Casual Leave">Casual Leave</option>
+    <option value="Sick Leave">Sick Leave</option>
+    <option value="Earned Leave">Earned Leave</option>
+</select>
+
+<label>From Date</label>
+<input type="date" name="from_date" required>
+
+<label>To Date</label>
+<input type="date" name="to_date" required>
+
+<label>Reason</label>
+<textarea name="reason" rows="4" required></textarea>
+
+<button type="submit">
+    <i class="fas fa-paper-plane"></i>
+    Apply Leave
+</button>
+
+</form>
+
+{% if message %}
+<div class="message">
+    {{ message }}
+</div>
+{% endif %}
+
+<hr><br>
+
+<h3>My Leave Requests</h3>
+
+<table border="1" width="100%" cellpadding="10">
+    <tr>
+        <th>Leave Type</th>
+        <th>From</th>
+        <th>To</th>
+        <th>Reason</th>
+        <th>Status</th>
+    </tr>
+
+    {% for leave in leaves %}
+    <tr>
+        <td>{{ leave.leave_type }}</td>
+        <td>{{ leave.from_date }}</td>
+        <td>{{ leave.to_date }}</td>
+        <td>{{ leave.reason }}</td>
+        <td>{{ leave.status }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<a href="{{ url_for('dashboard') }}" class="back">
+    ← Back to Dashboard
+</a>
+    

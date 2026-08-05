@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Clustering</title>
+
+    <style>
+
+        body{
+            font-family:Arial;
+            background:#f4f6f9;
+        }
+
+        .container{
+            width:500px;
+            margin:50px auto;
+            background:white;
+            padding:30px;
+            border-radius:10px;
+            box-shadow:0 0 10px gray;
+        }
+
+        h2{
+            text-align:center;
+            color:#2563eb;
+        }
+
+        input{
+            width:100%;
+            padding:10px;
+            margin:10px 0;
+        }
+
+        button{
+            width:100%;
+            padding:12px;
+            background:#2563eb;
+            color:white;
+            border:none;
+            border-radius:5px;
+            cursor:pointer;
+            font-size:16px;
+        }
+
+        button:hover{
+            background:#1d4ed8;
+        }
+
+        .result{
+            margin-top:20px;
+            text-align:center;
+            font-size:20px;
+            color:green;
+            font-weight:bold;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Employee Clustering</h2>
+
+<form method="POST">
+
+<label>Attendance (%)</label>
+<input type="number" name="attendance" required>
+
+<label>Leave Days</label>
+<input type="number" name="leave_days" required>
+
+<label>Experience (Years)</label>
+<input type="number" name="experience" required>
+
+<label>Salary</label>
+<input type="number" name="salary" required>
+
+<button type="submit">
+Predict Cluster
+</button>
+
+</form>
+
+{% if result %}
+<div class="result">
+    {{ result }}
+</div>
+{% endif %}
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Attrition Prediction</title>
+
+    <style>
+        body{
+            font-family:Arial;
+            background:#f4f6f9;
+        }
+
+        .container{
+            width:450px;
+            margin:40px auto;
+            background:white;
+            padding:25px;
+            border-radius:10px;
+            box-shadow:0 0 10px gray;
+        }
+
+        h2{
+            text-align:center;
+            color:#2c3e50;
+        }
+
+        label{
+            font-weight:bold;
+        }
+
+        input{
+            width:100%;
+            padding:10px;
+            margin-top:5px;
+            margin-bottom:15px;
+        }
+
+        button{
+            width:100%;
+            padding:12px;
+            background:#007bff;
+            color:white;
+            border:none;
+            font-size:16px;
+            cursor:pointer;
+        }
+
+        button:hover{
+            background:#0056b3;
+        }
+
+        h3{
+            text-align:center;
+            color:green;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Employee Attrition Prediction</h2>
+
+<form method="POST">
+
+<label>Age</label>
+<input type="number" name="age" required>
+
+<label>Experience (Years)</label>
+<input type="number" name="experience" required>
+
+<label>Salary</label>
+<input type="number" name="salary" required>
+
+<label>Job Satisfaction (1-5)</label>
+<input type="number" name="job_satisfaction" min="1" max="5" required>
+
+<label>Overtime Hours</label>
+<input type="number" name="overtime_hours" required>
+
+<label>Leave Days</label>
+<input type="number" name="leave_days" required>
+
+<label>Attendance (%)</label>
+<input type="number" name="attendance" required>
+
+<button type="submit">Predict Attrition</button>
+
+</form>
+
+{% if result %}
+<h3>Prediction: {{ result }}</h3>
+{% endif %}
+
+</div>
+
+</body>
+</html>

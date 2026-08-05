@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Employee Management Dashboard</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#f4f6f9;
+}
+
+/* Sidebar */
+
+.sidebar{
+    position:fixed;
+    top:0;
+    left:0;
+    width:250px;
+    height:100vh;
+    background:#1e293b;
+    overflow-y:auto;
+}
+
+.sidebar h2{
+    color:white;
+    text-align:center;
+    padding:20px;
+    background:#0f172a;
+}
+
+.sidebar ul{
+    list-style:none;
+}
+
+.sidebar ul li{
+    border-bottom:1px solid rgba(255,255,255,0.1);
+}
+
+.sidebar ul li a{
+    display:block;
+    color:white;
+    text-decoration:none;
+    padding:15px 20px;
+    font-size:16px;
+    transition:0.3s;
+}
+
+.sidebar ul li a:hover{
+    background:#2563eb;
+}
+
+/* Main */
+
+.main{
+    margin-left:250px;
+}
+
+/* Header */
+
+.header{
+    background:white;
+    padding:20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+
+.header h2{
+    color:#2563eb;
+}
+
+/* Cards */
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+    padding:30px;
+}
+
+.card{
+    background:white;
+    border-radius:10px;
+    padding:25px;
+    text-align:center;
+    box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+.card i{
+    font-size:40px;
+    margin-bottom:10px;
+}
+
+.blue{color:#2563eb;}
+.green{color:#16a34a;}
+.orange{color:#ea580c;}
+.red{color:#dc2626;}
+
+.card h1{
+    margin-top:10px;
+}
+
+/* Quick Access */
+
+.quick{
+    padding:0 30px 30px;
+}
+
+.quick h2{
+    margin-bottom:20px;
+}
+
+.buttons{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:20px;
+}
+
+.btn{
+    display:block;
+    text-decoration:none;
+    text-align:center;
+    background:#2563eb;
+    color:white;
+    padding:15px;
+    border-radius:8px;
+    font-size:17px;
+}
+
+.btn:hover{
+    background:#1d4ed8;
+}
+
+.footer{
+    text-align:center;
+    color:gray;
+    padding:20px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- Sidebar -->
+
+<div class="sidebar">
+
+<h2>HR Portal</h2>
+
+<ul>
+
+<li><a href="{{ url_for('dashboard') }}"><i class="fas fa-home"></i> Dashboard</a></li>
+
+<li><a href="{{ url_for('profile') }}"><i class="fas fa-user"></i> Profile</a></li>
+
+<li><a href="{{ url_for('attendance') }}"><i class="fas fa-clock"></i> Attendance</a></li>
+
+<li><a href="{{ url_for('attendance_records') }}"><i class="fas fa-list"></i> Attendance Records</a></li>
+
+<li><a href="{{ url_for('leave') }}"><i class="fas fa-calendar-check"></i> Leave</a></li>
+
+<li><a href="{{ url_for('leave_approval') }}"><i class="fas fa-check-circle"></i> Leave Approval</a></li>
+
+<li><a href="{{ url_for('salary') }}"><i class="fas fa-money-bill"></i> Salary Slip</a></li>
+
+<li><a href="{{ url_for('employees') }}"><i class="fas fa-users"></i> Employees</a></li>
+
+<li><a href="{{ url_for('prediction') }}"><i class="fas fa-robot"></i> AI Attendance Prediction</a></li>
+
+<li><a href="{{ url_for('leave_prediction') }}"><i class="fas fa-brain"></i> Leave Prediction</a></li>
+
+<li><a href="{{ url_for('employee_clustering') }}"><i class="fas fa-project-diagram"></i> Employee Clustering</a></li>
+
+<li><a href="{{ url_for('performance_prediction') }}"><i class="fas fa-chart-line"></i> Performance Prediction</a></li>
+
+<li><a href="{{ url_for('promotion_prediction') }}"><i class="fas fa-trophy"></i> Promotion Prediction</a></li>
+
+<li><a href="{{ url_for('attrition_prediction') }}"><i class="fas fa-user-minus"></i> Employee Attrition Prediction</a></li>
+
+<li>
+<a href="{{ url_for('anomaly_detection') }}">
+<i class="fas fa-shield-alt"></i> Anomaly Detection
+</a>
+</li>
+<li>
+<a href="{{ url_for('future_attendance_prediction') }}">
+<i class="fas fa-calendar-check"></i>
+Future Attendance Prediction
+</a>
+</li>
+<li>
+    <a href="{{ url_for('feedback_sentiment') }}">
+        <i class="fas fa-comments"></i>
+        Employee Feedback Sentiment
+    </a>
+</li>
+<li><a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+
+</ul>
+
+</div>
+
+<!-- Main -->
+
+<div class="main">
+
+<div class="header">
+
+<h2>Employee Management Dashboard</h2>
+
+<h3>Welcome {{ username }}</h3>
+
+</div>
+
+<div class="cards">
+
+<div class="card">
+<i class="fas fa-users blue"></i>
+<h3>Total Employees</h3>
+<h1>{{ total_employees }}</h1>
+</div>
+
+<div class="card">
+<i class="fas fa-user-check green"></i>
+<h3>Present Today</h3>
+<h1>{{ present }}</h1>
+</div>
+
+<div class="card">
+<i class="fas fa-user-clock orange"></i>
+<h3>On Leave</h3>
+<h1>{{ leave }}</h1>
+</div>
+
+<div class="card">
+<i class="fas fa-file-invoice-dollar red"></i>
+<h3>Salary Generated</h3>
+<h1>{{ salary_generated }}</h1>
+</div>
+
+</div>
+
+<div class="quick">
+
+<h2>Quick Access</h2>
+
+<div class="buttons">
+
+<a href="{{ url_for('profile') }}" class="btn">👤 Profile</a>
+
+<a href="{{ url_for('attendance') }}" class="btn">🕒 Attendance</a>
+
+<a href="{{ url_for('leave') }}" class="btn">📝 Leave</a>
+
+<a href="{{ url_for('salary') }}" class="btn">💰 Salary Slip</a>
+
+<a href="{{ url_for('employees') }}" class="btn">👥 Employees</a>
+
+<a href="{{ url_for('performance_prediction') }}" class="btn">📊 Performance</a>
+
+</div>
+
+</div>
+
+<div class="footer">
+
+<h3>AI Employee Management System</h3>
+<p>Flask + Machine Learning + SQLite</p>
+
+</div>
+
+</div>
+
+</body>
+</html>

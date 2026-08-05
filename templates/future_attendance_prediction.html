@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Future Attendance Prediction</title>
+
+<style>
+
+body{
+    font-family: Arial, sans-serif;
+    background:#f4f6f9;
+}
+
+.container{
+    width:450px;
+    margin:50px auto;
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+h2{
+    text-align:center;
+    color:#2563eb;
+}
+
+label{
+    display:block;
+    margin-top:15px;
+    font-weight:bold;
+}
+
+input{
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+
+button{
+    width:100%;
+    margin-top:25px;
+    padding:12px;
+    background:#2563eb;
+    color:white;
+    border:none;
+    border-radius:5px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#1d4ed8;
+}
+
+.result{
+    margin-top:25px;
+    text-align:center;
+    font-size:20px;
+    font-weight:bold;
+}
+
+.back{
+    display:block;
+    margin-top:20px;
+    text-align:center;
+    text-decoration:none;
+    color:#2563eb;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+<h2>📅 Future Attendance Prediction</h2>
+
+
+<form method="POST">
+
+
+<label>Previous Day 1 Attendance</label>
+<input type="number" name="day1" min="0" max="1" placeholder="1 = Present, 0 = Absent" required>
+
+
+<label>Previous Day 2 Attendance</label>
+<input type="number" name="day2" min="0" max="1" placeholder="1 = Present, 0 = Absent" required>
+
+
+<label>Previous Day 3 Attendance</label>
+<input type="number" name="day3" min="0" max="1" placeholder="1 = Present, 0 = Absent" required>
+
+
+<button type="submit">
+Predict Future Attendance
+</button>
+
+
+</form>
+
+
+{% if result %}
+
+<div class="result">
+
+Prediction: {{ result }}
+
+</div>
+
+{% endif %}
+
+
+<a href="{{ url_for('dashboard') }}" class="back">
+⬅ Back to Dashboard
+</a>
+
+
+</div>
+
+
+</body>
+</html>

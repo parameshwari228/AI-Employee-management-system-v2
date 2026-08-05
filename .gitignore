@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.pyc
+
+# Database
+*.db
+employee.db
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+desktop.ini
+.DS_Store
+
+# Old ML models
+attendance_model.pkl
+cluster_model.pkl
+leave_model.pkl
+performance_encoder.pkl
+performance_model.pkl
+promotion_model.pkl
+
+# Deep Learning model files
+*.keras
+*.h5
+*.joblib
+
+# BERT training files (very large)
+models/bert_training/
+models/bert_sentiment_model/
+
+# TensorFlow checkpoints
+checkpoint
+checkpoint-*/
+*.index
+*.data-00000-of-00001
+
+# Logs
+*.log

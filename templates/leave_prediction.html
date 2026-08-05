@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Leave Approval Prediction</title>
+
+    <style>
+        body{
+            font-family:Arial;
+            background:#f4f6f9;
+            margin:0;
+        }
+
+        .container{
+            width:500px;
+            margin:50px auto;
+            background:white;
+            padding:30px;
+            border-radius:10px;
+            box-shadow:0 0 10px gray;
+        }
+
+        h2{
+            text-align:center;
+            color:#2563eb;
+        }
+
+        label{
+            font-weight:bold;
+        }
+
+        input{
+            width:100%;
+            padding:10px;
+            margin-top:5px;
+            margin-bottom:15px;
+            border:1px solid #ccc;
+            border-radius:5px;
+        }
+
+        button{
+            width:100%;
+            padding:12px;
+            background:#2563eb;
+            color:white;
+            border:none;
+            border-radius:5px;
+            font-size:16px;
+            cursor:pointer;
+        }
+
+        button:hover{
+            background:#1d4ed8;
+        }
+
+        .approved{
+            color:green;
+            text-align:center;
+            font-size:20px;
+            font-weight:bold;
+            margin-top:20px;
+        }
+
+        .rejected{
+            color:red;
+            text-align:center;
+            font-size:20px;
+            font-weight:bold;
+            margin-top:20px;
+        }
+
+        .back{
+            display:block;
+            text-align:center;
+            margin-top:20px;
+            text-decoration:none;
+            color:white;
+            background:#555;
+            padding:10px;
+            border-radius:5px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Leave Approval Prediction</h2>
+
+<form method="POST">
+
+<label>Attendance (%)</label>
+<input type="number" name="attendance" required>
+
+<label>Leave Days</label>
+<input type="number" name="leave_days" required>
+
+<label>Experience (Years)</label>
+<input type="number" name="experience" required>
+
+<label>Previous Leaves</label>
+<input type="number" name="previous_leaves" required>
+
+<button type="submit">Predict</button>
+
+</form>
+
+{% if result == "Approved ✅" %}
+<div class="approved">
+    {{ result }}
+</div>
+{% endif %}
+
+{% if result == "Rejected ❌" %}
+<div class="rejected">
+    {{ result }}
+</div>
+{% endif %}
+
+<a href="{{ url_for('dashboard') }}" class="back">
+    Back to Dashboard
+</a>
+
+</div>
+
+</body>
+</html>

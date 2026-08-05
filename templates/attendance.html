@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Attendance</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#f4f6f9;
+}
+
+/* Sidebar */
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    width:240px;
+    height:100%;
+    background:#1e293b;
+}
+
+.sidebar h2{
+    color:white;
+    text-align:center;
+    padding:20px;
+    background:#0f172a;
+}
+
+.sidebar ul{
+    list-style:none;
+}
+
+.sidebar ul li a{
+    display:block;
+    color:white;
+    text-decoration:none;
+    padding:15px;
+}
+
+.sidebar ul li a:hover{
+    background:#2563eb;
+}
+
+/* Main */
+
+.main{
+    margin-left:240px;
+    padding:30px;
+}
+
+.card{
+    background:white;
+    max-width:700px;
+    margin:auto;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+.card h2{
+    text-align:center;
+    color:#2563eb;
+    margin-bottom:20px;
+}
+
+.date{
+    text-align:center;
+    font-size:18px;
+    margin-bottom:25px;
+}
+
+.buttons{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    margin-bottom:20px;
+}
+
+button{
+    padding:12px 30px;
+    font-size:16px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    color:white;
+}
+
+.in{
+    background:#16a34a;
+}
+
+.out{
+    background:#dc2626;
+}
+
+button:hover{
+    opacity:0.9;
+}
+
+.message{
+    text-align:center;
+    color:green;
+    font-weight:bold;
+    margin-top:20px;
+}
+
+.back{
+    display:block;
+    width:220px;
+    margin:30px auto 0;
+    text-align:center;
+    background:#2563eb;
+    color:white;
+    text-decoration:none;
+    padding:12px;
+    border-radius:8px;
+}
+
+.back:hover{
+    background:#1d4ed8;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+<h2>HR Portal</h2>
+
+<ul>
+
+<li><a href="{{ url_for('dashboard') }}"><i class="fas fa-home"></i> Dashboard</a></li>
+
+<li><a href="{{ url_for('profile') }}"><i class="fas fa-user"></i> Profile</a></li>
+
+<li><a href="{{ url_for('attendance') }}"><i class="fas fa-clock"></i> Attendance</a></li>
+
+<li><a href="{{ url_for('leave') }}"><i class="fas fa-calendar-check"></i> Leave</a></li>
+
+<li><a href="{{ url_for('salary') }}"><i class="fas fa-money-bill"></i> Salary</a></li>
+
+<li><a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+
+</ul>
+
+</div>
+
+<div class="main">
+
+<div class="card">
+
+<h2>Employee Attendance</h2>
+<div class="date">
+    <strong>Date:</strong> {{ current_date }}
+</div>
+
+<form method="POST">
+
+    <div class="buttons">
+
+        <button class="in" type="submit" name="action" value="Punch In">
+            <i class="fas fa-sign-in-alt"></i> Punch In
+        </button>
+
+        <button class="out" type="submit" name="action" value="Punch Out">
+            <i class="fas fa-sign-out-alt"></i> Punch Out
+        </button>
+
+    </div>
+
+</form>
+
+{% if message %}
+<div class="message">
+    {{ message }}
+</div>
+{% endif %}
+
+<!-- Paste the code here -->
+{% if attendance %}
+
+<hr>
+
+<h3>Today's Attendance</h3>
+
+<table border="1" width="100%" cellpadding="10">
+
+<tr>
+    <th>Date</th>
+    <th>Punch In</th>
+    <th>Punch Out</th>
+    <th>Status</th>
+</tr>
+
+<tr>
+    <td>{{ attendance.date }}</td>
+    <td>{{ attendance.punch_in }}</td>
+    <td>{{ attendance.punch_out if attendance.punch_out else "Not Yet" }}</td>
+    <td>{{ attendance.status }}</td>
+</tr>
+
+</table>
+
+{% endif %}
+
+<a href="{{ url_for('dashboard') }}" class="back">
+    ← Back to Dashboard
+</a>
+

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Employee</title>
+    <style>
+        body{
+            font-family:Arial;
+            background:#f4f6f9;
+        }
+
+        .container{
+            width:500px;
+            margin:40px auto;
+            background:white;
+            padding:20px;
+            border-radius:10px;
+            box-shadow:0 0 10px gray;
+        }
+
+        input{
+            width:100%;
+            padding:10px;
+            margin:10px 0;
+        }
+
+        button{
+            width:100%;
+            padding:10px;
+            background:#007BFF;
+            color:white;
+            border:none;
+            cursor:pointer;
+        }
+
+        a{
+            text-decoration:none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Add Employee</h2>
+
+<form method="POST">
+
+<input type="text" name="employee_id" placeholder="Employee ID" required>
+
+<input type="text" name="name" placeholder="Employee Name" required>
+
+<input type="text" name="department" placeholder="Department" required>
+
+<input type="text" name="designation" placeholder="Designation" required>
+
+<input type="email" name="email" placeholder="Email" required>
+
+<input type="text" name="phone" placeholder="Phone Number" required>
+
+<button type="submit">Save Employee</button>
+
+</form>
+
+<br>
+
+<a href="{{ url_for('employees') }}">View Employees</a>
+
+</div>
+
+</body>
+</html>

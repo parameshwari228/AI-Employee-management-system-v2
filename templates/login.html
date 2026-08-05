@@ -1,0 +1,157 @@
+<!DOCTYPE html>  <html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Employee Management System - Login</title>  <link rel="stylesheet"  
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">  
+
+<style>
+body{
+    margin:0;
+    padding:0;
+    font-family:Arial, Helvetica, sans-serif;
+
+    background-image: url("{{ url_for('static', filename='images/images.jpg') }}");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}  
+
+   .login-container{
+    width:380px;
+    background:rgba(255,255,255,0.88);
+    backdrop-filter:blur(10px);
+    padding:35px;
+    border-radius:15px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.35);
+}
+
+    
+
+    .logo{  
+        text-align:center;  
+        margin-bottom:20px;  
+    }  
+
+    .logo i{  
+        font-size:55px;  
+        color:#2563eb;  
+    }  
+
+    h2{  
+        text-align:center;  
+        color:#1e3a8a;  
+        margin-bottom:8px;  
+    }  
+
+    p{  
+        text-align:center;  
+        color:gray;  
+        margin-bottom:25px;  
+    }  
+
+    .input-group{  
+        margin-bottom:18px;  
+    }  
+
+    .input-group label{  
+        font-weight:bold;  
+    }  
+
+    .input-group input{  
+        width:100%;  
+        padding:12px;  
+        margin-top:8px;  
+        border:1px solid #ccc;  
+        border-radius:8px;  
+        font-size:15px;  
+    }  
+
+    .input-group input:focus{  
+        outline:none;  
+        border-color:#2563eb;  
+    }  
+
+    .login-btn{  
+        width:100%;  
+        padding:12px;  
+        background:#2563eb;  
+        color:white;  
+        border:none;  
+        border-radius:8px;  
+        font-size:16px;  
+        cursor:pointer;  
+    }  
+
+    .login-btn:hover{  
+        background:#1d4ed8;  
+    }  
+
+    .error{  
+        color:red;  
+        text-align:center;  
+        margin-top:15px;  
+        font-weight:bold;  
+    }  
+
+    .footer{  
+        margin-top:25px;  
+        text-align:center;  
+        color:gray;  
+        font-size:13px;  
+    }  
+
+</style>
+
+</head>  
+<body>  <div class="login-container">  <div class="logo">  
+    <i class="fas fa-users-cog"></i>  
+</div>  
+
+<h2>Employee Management System</h2>  
+
+<p>Login to continue</p>  
+
+<form action="{{ url_for('login') }}" method="POST">  
+
+    <div class="input-group">  
+        <label>Username</label>  
+        <input type="text"  
+               name="username"  
+               placeholder="Enter Username"  
+               required>  
+    </div>  
+
+    <div class="input-group">  
+        <label>Password</label>  
+        <input type="password"  
+               name="password"  
+               placeholder="Enter Password"  
+               required>  
+    </div>  
+
+    <button type="submit" class="login-btn">  
+        <i class="fas fa-sign-in-alt"></i> Login  
+    </button>  
+
+</form>  
+
+{% if error %}  
+    <div class="error">  
+        {{ error }}  
+    </div>  
+{% endif %}  
+
+<div class="footer">  
+    AI Employee Management System<br>  
+    Flask + Python + SQLite  
+</div>
+
+</div>  </body>  
+</html>

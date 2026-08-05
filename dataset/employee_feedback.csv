@@ -1,0 +1,13 @@
+Feedback,Sentiment
+"I am happy with my job and company",Positive
+"My manager always supports me",Positive
+"The salary is good and benefits are excellent",Positive
+"I don't like the workload",Negative
+"The working hours are too long",Negative
+"I am unhappy with management",Negative
+"The office is okay",Neutral
+"The experience is average",Neutral
+"I have no complaints",Neutral
+"Good team collaboration and growth opportunities",Positive
+"Too much pressure and stress at work",Negative
+"Nothing special about this job",Neutral

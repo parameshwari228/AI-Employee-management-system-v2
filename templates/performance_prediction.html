@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Employee Performance Prediction</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#f4f6f9;
+}
+
+.container{
+    width:500px;
+    margin:50px auto;
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+h2{
+    text-align:center;
+    color:#2563eb;
+    margin-bottom:25px;
+}
+
+label{
+    display:block;
+    margin-top:15px;
+    font-weight:bold;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    margin-top:8px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    font-size:16px;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    margin-top:25px;
+    background:#2563eb;
+    color:white;
+    border:none;
+    border-radius:6px;
+    font-size:18px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#1d4ed8;
+}
+
+.result{
+    margin-top:25px;
+    text-align:center;
+    font-size:22px;
+    font-weight:bold;
+    color:green;
+}
+
+.back{
+    display:block;
+    text-align:center;
+    margin-top:25px;
+    text-decoration:none;
+    background:#555;
+    color:white;
+    padding:12px;
+    border-radius:6px;
+}
+
+.back:hover{
+    background:#333;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Employee Performance Prediction</h2>
+
+<form method="POST">
+
+<label>Attendance (%)</label>
+<input
+type="number"
+name="attendance"
+placeholder="Enter Attendance"
+required>
+
+<label>Leave Days</label>
+<input
+type="number"
+name="leave_days"
+placeholder="Enter Leave Days"
+required>
+
+<label>Experience (Years)</label>
+<input
+type="number"
+name="experience"
+placeholder="Enter Experience"
+required>
+
+<label>Projects Completed</label>
+<input
+type="number"
+name="projects"
+placeholder="Enter Projects Completed"
+required>
+
+<button type="submit">
+Predict Performance
+</button>
+
+</form>
+
+{% if result %}
+
+<div class="result">
+Performance :
+<strong>{{ result }}</strong>
+</div>
+
+{% endif %}
+
+<a href="{{ url_for('dashboard') }}" class="back">
+⬅ Back to Dashboard
+</a>
+
+</div>
+
+</body>
+</html>
