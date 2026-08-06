@@ -9,30 +9,30 @@ from tensorflow.keras.models import load_model
 from transformers import BertTokenizer, BertForSequenceClassification
 import torch
 import numpy as np 
-#model = joblib.load("attendance_model.pkl")
-#leave_model = joblib.load("leave_model.pkl")
-#cluster_model = joblib.load("cluster_model.pkl")
-#performance_model = joblib.load("performance_model.pkl")
-#promotion_model = joblib.load("promotion_model.pkl")
-#performance_encoder=joblib.load("performance_encoder.pkl")
-#attrition_model = load_model("models/attrition_ann.keras")
-#attrition_scaler = joblib.load("models/attrition_scaler.pkl")
-#attrition_encoder = joblib.load("models/attrition_encoder.pkl")
-#anomaly_model = load_model("models/autoencoder.keras")
-#anomaly_scaler = joblib.load("models/autoencoder_scaler.pkl")
-#lstm_model = load_model("models/attendance_lstm.keras")
-#lstm_scaler = joblib.load("models/lstm_scaler.pkl")
-#bert_model = BertForSequenceClassification.from_pretrained(
-#    "models/bert_sentiment_model"
-#)
+model = joblib.load("models/attendance_model.pkl")
+leave_model = joblib.load("models/leave_model.pkl")
+cluster_model = joblib.load("models/cluster_model.pkl")
+performance_model = joblib.load("models/performance_model.pkl")
+promotion_model = joblib.load("models/promotion_model.pkl")
+performance_encoder=joblib.load("models/performance_encoder.pkl")
+attrition_model = load_model("models/attrition_ann.keras")
+attrition_scaler = joblib.load("models/attrition_scaler.pkl")
+attrition_encoder = joblib.load("models/attrition_encoder.pkl")
+anomaly_model = load_model("models/autoencoder.keras")
+anomaly_scaler = joblib.load("models/autoencoder_scaler.pkl")
+lstm_model = load_model("models/attendance_lstm.keras")
+lstm_scaler = joblib.load("models/lstm_scaler.pkl")
+bert_model = BertForSequenceClassification.from_pretrained(
+    "models/bert_sentiment_model"
+)
 
-#bert_tokenizer = BertTokenizer.from_pretrained(
-#    "models/bert_sentiment_model"
-#)
+bert_tokenizer = BertTokenizer.from_pretrained(
+    "models/bert_sentiment_model"
+)
 
-#bert_encoder = joblib.load(
- #   "models/bert_label_encoder.pkl"
-#)
+bert_encoder = joblib.load(
+    "models/bert_label_encoder.pkl"
+)
 
 def get_db_connection():
     conn = sqlite3.connect("employee.db")
@@ -275,7 +275,34 @@ def reject_leave(id):
 
     return redirect(url_for("leave_approval"))
 #------------------leave prediction----------------
-#
+@app.route("/leave_prediction", methods=["GET", "POST"])
+def leave_prediction():
+
+    if "username" not in session:
+        return redirect(url_for("login"))
+
+    result = ""
+
+    if request.method == "POST":
+
+        attendance = float(request.form["attendance"])
+        leave_days = float(request.form["leave_days"])
+        experience = float(request.form["experience"])
+        previous_leaves = float(request.form["previous_leaves"])
+
+        prediction = leave_model.predict(
+            [[attendance, leave_days, experience, previous_leaves]]
+        )
+
+        if prediction[0] == 1:
+            result = "Approved ✅"
+        else:
+            result = "Rejected ❌"
+
+    return render_template(
+        "leave_prediction.html",
+        result=result
+    )
 # ---------------- SALARY ----------------
 @app.route("/salary")
 def salary():
@@ -394,23 +421,318 @@ def delete_employee(id):
     return redirect(url_for('employees'))
 
 #---------------prediction----------------
-#
+@app.route("/prediction", methods=["GET", "POST"])
+def prediction():
+
+    if "username" not in session:
+        return redirect(url_for("login"))
+
+    result = ""
+
+    if request.method == "POST":
+
+        attendance = float(request.form["attendance"])
+        leave = float(request.form["leave"])
+
+        prediction = model.predict([[attendance, leave]])
+
+        result = prediction[0]
+
+    return render_template("prediction.html", result=result)
 #-----------------clustering----------------
-#
+@app.route("/employee_clustering", methods=["GET", "POST"])
+def employee_clustering():
+
+    if "username" not in session:
+        return redirect(url_for("login"))
+
+    result = ""
+
+    if request.method == "POST":
+
+        attendance = float(request.form["attendance"])
+        leave_days = float(request.form["leave_days"])
+        experience = float(request.form["experience"])
+        salary = float(request.form["salary"])
+
+        cluster = cluster_model.predict(
+            [[attendance, leave_days, experience, salary]]
+        )
+
+        if cluster[0] == 2:
+            result = "⭐ High Performer"
+
+        elif cluster[0] == 1:
+            result = "👍 Average Performer"
+
+        else:
+            result = "📉 Needs Improvement"
+
+    return render_template("cluster.html", result=result)
 #-------------------performance_prediction-----------------
-#
+@app.route("/performance_prediction", methods=["GET", "POST"])
+def performance_prediction():
+
+    if "username" not in session:
+        return redirect(url_for("login"))
+
+    result = ""
+
+    if request.method == "POST":
+
+        attendance = float(request.form["attendance"])
+        leave_days = float(request.form["leave_days"])
+        experience = float(request.form["experience"])
+        projects = float(request.form["projects"])
+
+        prediction = performance_model.predict(
+            [[attendance, leave_days, experience, projects]]
+        )
+
+        result = prediction[0]
+
+    return render_template(
+        "performance_prediction.html",
+        result=result
+    )
 #-------------promotion_prediction-----------
-#
+@app.route("/promotion_prediction", methods=["GET", "POST"])
+def promotion_prediction():
+
+    if "username" not in session:
+        return redirect(url_for("login"))
+
+    result = ""
+
+    if request.method == "POST":
+
+        attendance = float(request.form["attendance"])
+        experience = float(request.form["experience"])
+        projects = float(request.form["projects"])
+
+        performance = request.form["performance"]
+
+        performance = performance_encoder.transform([performance])[0]
+
+        prediction = promotion_model.predict(
+            [[attendance, experience, projects, performance]]
+        )
+
+        if prediction[0] == 1:
+            result = "🎉 Promotion Eligible"
+        else:
+            result = "❌ Not Eligible"
+
+    return render_template(
+        "promotion_prediction.html",
+        result=result
+    )
 # ---------------- ATTRITION PREDICTION (ANN) ----------------
-#
+@app.route("/attrition_prediction", methods=["GET", "POST"])
+def attrition_prediction():
+
+    if "username" not in session:
+        return redirect(url_for("login"))
+
+    result = ""
+
+    if request.method == "POST":
+
+        age = float(request.form["age"])
+        experience = float(request.form["experience"])
+        salary = float(request.form["salary"])
+        job_satisfaction = float(request.form["job_satisfaction"])
+        overtime_hours = float(request.form["overtime_hours"])
+        leave_days = float(request.form["leave_days"])
+        attendance = float(request.form["attendance"])
+
+        data = [[
+            age,
+            experience,
+            salary,
+            job_satisfaction,
+            overtime_hours,
+            leave_days,
+            attendance
+        ]]
+
+        data = attrition_scaler.transform(data)
+
+        prediction = attrition_model.predict(data)
+
+        predicted = (prediction > 0.5).astype(int)
+
+        result = attrition_encoder.inverse_transform(predicted)[0]
+
+    return render_template(
+        "attrition_prediction.html",
+        result=result
+    )
 # ---------------- ANOMALY DETECTION (AUTOENCODER) ----------------
 
-##
+@app.route("/anomaly_detection")
+def anomaly_detection():
+
+    if "username" not in session:
+        return redirect(url_for("login"))
+
+    # Load new employee data
+    employee_data = pd.read_csv(
+        "dataset/new_employee_data.csv"
+    )
+
+    # Store employee IDs
+    employee_ids = employee_data["Employee_ID"]
+
+
+    # Remove Employee ID for prediction
+    X = employee_data.drop(
+        "Employee_ID",
+        axis=1
+    )
+
+
+    # Use saved scaler from training
+    X_scaled = anomaly_scaler.transform(
+        X
+    )
+
+
+    # Autoencoder prediction
+    reconstruction = anomaly_model.predict(
+        X_scaled
+    )
+
+
+    # Calculate reconstruction error
+    anomaly_score = np.mean(
+        np.square(X_scaled - reconstruction),
+        axis=1
+    )
+
+
+    # Set threshold
+    threshold = np.percentile(
+        anomaly_score,
+        80
+    )
+
+
+    # Create result dataframe
+    result = pd.DataFrame({
+
+        "Employee_ID": employee_ids,
+
+        "Anomaly_Score": anomaly_score,
+
+        "Status": np.where(
+            anomaly_score > threshold,
+            "Anomaly",
+            "Normal"
+        )
+    })
+
+
+    # Convert to HTML data
+    anomaly_data = result.to_dict(
+        orient="records"
+    )
+
+
+    return render_template(
+        "anomaly.html",
+        data=anomaly_data
+    )
 # ---------------- FUTURE ATTENDANCE PREDICTION (LSTM) ----------------
 
-#
+@app.route("/future_attendance_prediction", methods=["GET", "POST"])
+def future_attendance_prediction():
+
+    if "username" not in session:
+        return redirect(url_for("login"))
+
+    result = ""
+
+    if request.method == "POST":
+
+        day1 = float(request.form["day1"])
+        day2 = float(request.form["day2"])
+        day3 = float(request.form["day3"])
+
+
+        data = np.array([
+            [day1],
+            [day2],
+            [day3]
+        ])
+
+
+        scaled_data = lstm_scaler.transform(
+            data
+        )
+
+
+        X_input = np.array([
+            scaled_data
+        ])
+
+
+        prediction = lstm_model.predict(
+            X_input
+        )
+
+
+        future = lstm_scaler.inverse_transform(
+            prediction
+        )
+
+
+        if future[0][0] >= 0.5:
+            result = "Present ✅"
+        else:
+            result = "Absent ❌"
+
+
+    return render_template(
+        "future_attendance_prediction.html",
+        result=result
+    )
+
 #--------------feedback------------------
-#
+@app.route("/feedback_sentiment", methods=["GET", "POST"])
+def feedback_sentiment():
+
+    if "username" not in session:
+        return redirect(url_for("login"))
+
+    result = ""
+
+    if request.method == "POST":
+
+        feedback = request.form["feedback"]
+
+        inputs = bert_tokenizer(
+            feedback,
+            return_tensors="pt",
+            truncation=True,
+            padding=True,
+            max_length=128
+        )
+
+        with torch.no_grad():
+            outputs = bert_model(**inputs)
+
+        prediction = torch.argmax(outputs.logits, dim=1).item()
+
+        result = bert_encoder.inverse_transform([prediction])[0]
+
+    return render_template(
+        "feedback_sentiment.html",
+        result=result
+    )
+
+        
+
 # ---------------- LOGOUT ----------------
 @app.route("/logout")
 def logout():
@@ -420,8 +742,5 @@ def logout():
     return redirect(url_for("login"))
 
 # ---------------- RUN ----------------
-import os
-
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 10000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(debug=True)
